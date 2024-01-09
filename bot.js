@@ -18,6 +18,7 @@ let options = {
   second: '2-digit',
 };
 
+// currency format for BRL
 let currency = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
   currency: 'BRL',
@@ -38,23 +39,27 @@ const client = new Pool({
   , port: ''
 });
 
+// alerts if the conection was sucessfull
 client.connect().then(() => {
   console.log('Connected to PostgreSQL database!'); 
 }).catch((err) => {
   console.error('Error connecting to the database:', err);
 });
 
+// database query
 let query = `
   SELECT
           1000 AS revenue
         , '10:30' AS last_order
 `;
 
+// database query
 let query2 = `
   SELECT
           500 AS revenue_yt
 `;
 
+// sql connector
 function asyncQuery(conection, sqlQuery) {
   return new Promise((resolve, reject) => {
     conection.query(sqlQuery, function(err, result) {
@@ -67,7 +72,7 @@ function asyncQuery(conection, sqlQuery) {
   })
 }
 
-// command to get the chat id and send the message to the group
+// command to get the chat id and send the message to the group with the values fetched from the database
 const sendTelMessage = function () {
   bot.getChat(chatName).then(function(chat) {
     let chatID = chat.id;
